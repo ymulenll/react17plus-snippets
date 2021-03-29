@@ -1,0 +1,48 @@
+{
+  "name": "react17plus-snippets",
+  "displayName": "React 17+/Redux/React-Query Snippets",
+  "description": "Snippets for React 17+",
+  "version": "1.0.0",
+  "publisher": "yoelvismulen",
+  "icon": "images/react-logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ymulenll/react17plus-snippets"
+  },
+  "keywords": [
+    "snippets",
+    "react"
+  ],
+  "engines": {
+    "vscode": "^1.54.0"
+  },
+  "categories": [
+    "Snippets"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.snippetSearch",
+        "title": "React 17 snippet search"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.snippetSearch",
+        "key": "ctrl+alt+r",
+        "mac": "shift+cmd+r",
+        "when": "editorTextFocus"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "javascript",
+        "path": "./snippets/snippets.code-snippets"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./snippets/snippets.code-snippets"
+      }
+    ]
+  }
+}
