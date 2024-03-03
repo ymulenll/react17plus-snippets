@@ -1,112 +1,222 @@
 {
-  "import": {
-    "prefix": ["impDefault", "di"],
-    "body": "import ${2:moduleName} from \"${1:module}\";$0",
-    "description": "Default import"
-  },
-  "importDestructing": {
-    "prefix": ["impNamed", "ni"],
+  "Named import": {
+    "prefix": ["imp", "impN"],
     "body": "import { $2 } from \"${1:module}\";$0",
     "description": "Named import"
   },
-  "Print to the console": {
-    "prefix": ["log", "clg"],
+  "Default import": {
+    "prefix": ["impD"],
+    "body": "import ${2:moduleName} from \"${1:module}\";",
+    "description": "Default import"
+  },
+  "Import everything": {
+    "prefix": ["impE"],
+    "body": "import * as ${2:moduleName} from \"${1:module}\";",
+    "description": "Import everything"
+  },
+  "Import css": {
+    "prefix": ["impCss"],
+    "body": "import \"./${TM_FILENAME_BASE}.css\";",
+    "description": "Import css module"
+  },
+  "Import css module": {
+    "prefix": ["impCssMod"],
+    "body": "import styles from \"./${TM_FILENAME_BASE}.module.css\";",
+    "description": "Import css module"
+  },
+  "Import scss module": {
+    "prefix": ["impScssMod"],
+    "body": "import styles from \"./${TM_FILENAME_BASE}.module.scss\";",
+    "description": "Import css module"
+  },
+  "Console log": {
+    "prefix": ["log", "cl"],
     "body": ["console.log($1);"],
     "description": "Log output to console"
   },
-  "destructureObject": {
+  "Console log from clipboard": {
+    "prefix": ["clc"],
+    "body": ["console.log($1${CLIPBOARD});"],
+    "description": "Log output to console from clipboard"
+  },
+  "Console log from selected text": {
+    "prefix": ["cls"],
+    "body": ["console.log($1${TM_SELECTED_TEXT});"],
+    "description": "Log output to console from selected text"
+  },
+  "Console dir": {
+    "prefix": ["cd"],
+    "body": ["console.dir($1);"],
+    "description": "Log output to console with dir"
+  },
+  "Console dir full": {
+    "prefix": ["cdf"],
+    "body": ["console.dir($1, { depth: null });"],
+    "description": "Log output to console with dir full"
+  },
+  "Console warn": {
+    "prefix": ["cw"],
+    "body": ["console.warn($1);"],
+    "description": "Log warning to console"
+  },
+  "Console error": {
+    "prefix": ["ce"],
+    "body": ["console.error($1);"],
+    "description": "Log error to console"
+  },
+  "Destructure object": {
     "prefix": "deso",
-    "body": "const { ${2:field} } = ${1:object};",
-    "description": "destructure object"
+    "body": "const { ${2} } = ${1:object};",
+    "description": "Destructure object"
   },
-  "destructureArray": {
+  "Destructure array": {
     "prefix": "desa",
-    "body": "const [ ${2:field} ] = ${1:array};",
-    "description": "destructure array"
+    "body": "const [${2}] = ${1:array};",
+    "description": "Destructure array"
   },
-  "reactFunctionalComponentExport": {
+  "function": {
+    "prefix": "fn",
+    "body": ["function ${1:name}(${2}) {", "\t$0", "}"],
+    "description": "Function"
+  },
+  "arrow function": {
+    "prefix": "arrow",
+    "body": ["const ${1:name} = (${2}) => {", "\t$0", "};"],
+    "description": "Arrow function"
+  },
+  "anonymous arrow function": {
+    "prefix": ["anon"],
+    "body": ["(${1}) => {", "\t$0", "}"],
+    "description": "Anonymous arrow function"
+  },
+
+  "React FC export": {
     "prefix": "rf",
     "body": [
-      "export function ${1:${TM_FILENAME_BASE}}() {",
+      "export function ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}() {",
       "\treturn (",
-      "\t\t<div>",
+      "\t\t<>",
       "\t\t\t$0",
-      "\t\t</div>",
+      "\t\t</>",
       "\t)",
       "}",
       ""
     ],
-    "description": "Creates a React Functional Component with named export"
+    "description": "React Functional Component"
   },
-  "reactFunctionalComponentDefaultExport": {
+  "React FC default export": {
     "prefix": "rfd",
     "body": [
-      "function ${1:${TM_FILENAME_BASE}}() {",
+      "function ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}() {",
       "\treturn (",
-      "\t\t<div>",
+      "\t\t<>",
       "\t\t\t$0",
-      "\t\t</div>",
+      "\t\t</>",
       "\t)",
       "}",
       "",
-      "export default ${1:${TM_FILENAME_BASE}};",
+      "export default ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/};",
       ""
     ],
-    "description": "Creates a React Functional Component with default export"
+    "description": "React Functional Component with default export"
   },
-  "reactArrowFunctionalComponentExport": {
+  "React arrow FC export": {
     "prefix": "ra",
     "body": [
-      "export const ${1:${TM_FILENAME_BASE}} = () => {",
+      "export const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} = () => {",
       "\treturn (",
-      "\t\t<div>",
+      "\t\t<>",
       "\t\t\t$0",
-      "\t\t</div>",
+      "\t\t</>",
       "\t)",
       "};",
       ""
     ],
-    "description": "Creates a React Arrow Component with named export"
+    "description": "React Arrow Component with named export"
   },
-  "reactArrowFunctionalComponentDefaultExport": {
+  "React arrow FC default export": {
     "prefix": "rad",
     "body": [
-      "const ${1:${TM_FILENAME_BASE}} = () => {",
+      "const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} = () => {",
       "\treturn (",
-      "\t\t<div>",
+      "\t\t<>",
       "\t\t\t$0",
-      "\t\t</div>",
+      "\t\t</>",
       "\t)",
       "};",
       "",
-      "export default ${1:${TM_FILENAME_BASE}};",
+      "export default ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/};",
       ""
     ],
-    "description": "Creates a React Arrow Component with default export"
+    "description": "React Arrow Component with default export"
   },
-  "useState": {
+  "lazy import snippet": {
+    "prefix": "lazy",
+    "body": [
+      "const ${1:Component} = lazy(() => import(\"${2:./Component}\"));"
+    ],
+    "description": "Lazy component import"
+  },
+  "React ErrorBoundary snippet": {
+    "prefix": ["ErrorBoundary", "eb"],
+    "body": [
+      "export class ${1:ErrorBoundary} extends React.Component {",
+      "\tconstructor(props) {",
+      "\t\tsuper(props);",
+      "\t\tthis.state = { hasError: false };",
+      "\t}",
+      "",
+      "\tstatic getDerivedStateFromError(error) {",
+      "\t\t// Update state so the next render will show the fallback UI.",
+      "\t\treturn { hasError: true };",
+      "\t}",
+      "",
+      "\tcomponentDidCatch(error, errorInfo) {",
+      "\t\t// You can also log the error to an error reporting service",
+      "\t}",
+      "",
+      "\trender() {",
+      "\t\tif (this.state.hasError) {",
+      "\t\t\t// You can render any custom fallback UI",
+      "\t\t\treturn <h1>Something went wrong.</h1>;",
+      "\t\t}",
+      "",
+      "\t\treturn this.props.children;",
+      "\t}",
+      "}"
+    ],
+    "description": "ErrorBoundary"
+  },
+  "useState Snippet": {
     "prefix": ["useState", "us"],
     "body": [
-      "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState(${2:initialState});"
+      "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState$3(${2:initialState});"
     ],
     "description": "Returns a stateful value, and a function to update it. During the initial render, the returned state (state) is the same as the value passed as the first argument (initialState). The setState function is used to update the state. It accepts a new state value and enqueues a re-render of the component."
   },
-  "useStateLazyInit": {
-    "prefix": "useStateLazy",
+  "useState lazy init Snippet": {
+    "prefix": ["useStateLazy", "usl"],
     "body": [
-      "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState(() => ${2:fn});"
+      "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState${3}(() => ${2:fn});"
     ],
     "description": "Returns a stateful value, and a function to update it. During the initial render, the returned state (state) is the same as the value passed as the first argument (initialState). The setState function is used to update the state. It accepts a new state value and enqueues a re-render of the component."
   },
-  "useEffect": {
+  "useReducer Snippet": {
+    "prefix": ["useReducer", "ured"],
+    "body": [
+      "const [state, dispatch] = useReducer$3(${2:reducer}, ${1:initialState});"
+    ],
+    "description": "An alternative to useState. Accepts a reducer of type (state, action) => newState, and returns the current state paired with a dispatch method."
+  },
+  "useEffect Snippet": {
     "prefix": ["useEffect", "ue"],
-    "body": ["useEffect(() => {", "\t${1}", "}, [${2}]);"],
+    "body": ["useEffect$3(() => {", "\t${1}", "}, [${2}]);"],
     "description": "Accepts a function that contains imperative, possibly effectful code. By default, effects run after every completed render, but you can choose to fire them only when certain values have changed (passing an array of dependencies)."
   },
-  "useEffectClean": {
-    "prefix": "useEffectClean",
+  "useEffect with clean function Snippet": {
+    "prefix": ["useEffectClean", "uec"],
     "body": [
-      "useEffect(() => {",
+      "useEffect$4(() => {",
       "\t${1}",
       "\treturn () => {",
       "\t\t${2}",
@@ -116,60 +226,15 @@
     ],
     "description": "The clean-up function runs before the component is removed from the UI to prevent memory leaks. Additionally, if a component renders multiple times (as they typically do), the previous effect is cleaned up before executing the next effect."
   },
-  "useContext": {
-    "prefix": ["useContext", "uc"],
-    "body": ["const ${1:context} = useContext(${2:contextValue})"],
-    "description": "Accepts a context object (the value returned from React.createContext) and returns the current context value for that context. The current context value is determined by the value prop of the nearest <MyContext.Provider> above the calling component in the tree."
-  },
-  "useCallback": {
-    "prefix": "useCallback",
-    "body": [
-      "useCallback(",
-      "\t() => {",
-      "\t\t${1:callback}",
-      "\t},",
-      "\t[${2}],",
-      ");"
-    ],
-    "description": "Pass an inline callback and an array of dependencies. useCallback will return a memoized version of the callback that only changes if one of the dependencies has changed. This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders (e.g. shouldComponentUpdate)."
-  },
-  "useMemo": {
-    "prefix": ["useMemo", "um"],
-    "body": ["useMemo(() => ${1:fn}, [${2}]);"],
-    "description": "Pass a “create” function and an array of dependencies. useMemo will only recompute the memoized value when one of the dependencies has changed. This optimization helps to avoid expensive calculations on every render."
-  },
-  "useRef": {
-    "prefix": ["useRef", "ur"],
-    "body": ["const ${1:ref} = useRef(${2:initialValue});"],
-    "description": "useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component."
-  },
-  "useImperativeHandle": {
-    "prefix": "useImperativeHandle",
-    "body": [
-      "useImperativeHandle(",
-      "\t${1:ref},",
-      "\t() => {",
-      "\t\t${2:handler}",
-      "\t},",
-      "\t[${3}],",
-      ");"
-    ],
-    "description": "useImperativeHandle customizes the instance value that is exposed to parent components when using ref. As always, imperative code using refs should be avoided in most cases. useImperativeHandle should be used with forwardRef"
-  },
-  "useDebugValue": {
-    "prefix": "useDebugValue",
-    "body": ["useDebugValue(${1:value});"],
-    "description": "useDebugValue can be used to display a label for custom hooks in React DevTools."
-  },
-  "useLayoutEffect": {
+  "useLayoutEffect Snippet": {
     "prefix": ["useLayoutEffect", "ule"],
-    "body": ["useLayoutEffect(() => {", "\t${1}", "}, [${2}]);"],
+    "body": ["useLayoutEffect$3(() => {", "\t${1}", "}, [${2}]);"],
     "description": "The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint."
   },
-  "useLayoutEffectClean": {
-    "prefix": "useLayoutEffectClean",
+  "useLayoutEffect with clean function Snippet": {
+    "prefix": ["useLayoutEffectClean", "ulec"],
     "body": [
-      "useLayoutEffect(() => {",
+      "useLayoutEffect$4(() => {",
       "\t${1}",
       "\treturn () => {",
       "\t\t${2}",
@@ -178,85 +243,131 @@
     ],
     "description": "The clean-up function runs before the component is removed from the UI to prevent memory leaks. Additionally, if a component renders multiple times (as they typically do), the previous effect is cleaned up before executing the next effect."
   },
-  "useHistory": {
-    "prefix": "useHistory",
-    "body": ["const history = useHistory();"],
-    "description": "The useHistory hook gives you access to the history instance that you may use to navigate."
+  "useContext Snippet": {
+    "prefix": ["useContext", "ucx"],
+    "body": ["const ${1:context} = useContext$3(${2:Context})"],
+    "description": "Accepts a context object (the value returned from React.createContext) and returns the current context value for that context. The current context value is determined by the value prop of the nearest <MyContext.Provider> above the calling component in the tree."
   },
-  "useLocation": {
-    "prefix": "useLocation",
-    "body": ["const location = useLocation();"],
-    "description": "The useLocation hook returns the location object that represents the current URL. You can think about it like a useState that returns a new location whenever the URL changes."
-  },
-  "useParams": {
-    "prefix": "useParams",
-    "body": ["const { ${1:param} } = useParams();"],
-    "description": "useParams returns an object of key/value pairs of URL parameters. Use it to access match.params of the current <Route>."
-  },
-  "useRouteMatch": {
-    "prefix": "useRouteMatch",
-    "body": ["const match = useRouteMatch(\"${1:url}\");"],
-    "description": "useParams returns an object of key/value pairs of URL parameters. Use it to access match.params of the current <Route>."
-  },
-  "useSelector": {
-    "prefix": "useSelector",
-    "body": ["const ${1:state} = useSelector(state => state.${1:state});"],
-    "description": "Allows you to extract data from the Redux store state, using a selector function."
-  },
-  "useSelectorShallowEqual": {
-    "prefix": "useSelectorShallowEqual",
+  "useCallback Snippet": {
+    "prefix": ["useCallback", "uc"],
     "body": [
-      "const ${1:data} = useSelector((state) => ({${2:object}}), shallowEqual);"
+      "const ${1:memoizedCallback} = useCallback$4(${2:callbackFn}, [${3}]);"
     ],
-    "description": "The default comparison is a strict === reference comparison, use the shallowEqual function from React-Redux as the equalityFn argument to useSelector() to perform shallow comparisons."
+    "description": "Pass an inline callback and an array of dependencies. useCallback will return a memoized version of the callback that only changes if one of the dependencies has changed. This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders (e.g. React.memo or useEffect)."
   },
-  "useDispatch": {
-    "prefix": "useDispatch",
-    "body": ["const dispatch = useDispatch();"],
-    "description": "This hook returns a reference to the dispatch function from the Redux store. You may use it to dispatch actions as needed."
+  "useMemo Snippet": {
+    "prefix": ["useMemo", "um"],
+    "body": ["const ${1:memoizedValue} = useMemo(() => ${2:value}, [${3}]);"],
+    "description": "Pass a “create” function and an array of dependencies. useMemo will only recompute the memoized value when one of the dependencies has changed. This optimization helps to avoid expensive calculations on every render."
   },
-  "useStore": {
-    "prefix": "useStore",
-    "body": ["const store = useStore();"],
-    "description": "This hook returns a reference to the same Redux store that was passed in to the <Provider> component. This hook should probably not be used frequently. Prefer useSelector() as your primary choice. However, this may be useful for less common scenarios that do require access to the store, such as replacing reducers."
+  "useRef Snippet": {
+    "prefix": ["useRef", "uref"],
+    "body": ["const ${1:ref} = useRef(${2:initialValue});"],
+    "description": "useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component."
   },
-  "useQuery": {
-    "prefix": "useQuery",
-    "body": "const {${3}} = useQuery(${1:queryKey}, ${2:queryFn});",
+  "useId Snippet": {
+    "prefix": ["useId", "uid"],
+    "body": ["const ${1:id} = useId$2();"],
+    "description": "useId returns a unique id that persists across renders. Useful for aria attributes and labels."
+  },
+  "useDeferredValue Snippet": {
+    "prefix": ["useDeferredValue", "udv"],
+    "body": ["const ${1:deferredValue} = useDeferredValue$3(${2:value});"],
+    "description": "useDeferredValue returns a deferred value that is updated asynchronously. Useful for performance optimizations."
+  },
+  "useTransition Snippet": {
+    "prefix": ["useTransition", "ut"],
+    "body": ["const [isPending, startTransition] = useTransition$1();"],
+    "description": "useTransition returns a startTransition function and a boolean indicating if the transition is pending. Useful for performance optimizations."
+  },
+  "useSyncExternalStore Snippet": {
+    "prefix": ["useSyncExternalStore", "uses"],
+    "body": [
+      "const ${4:snapshot} = useSyncExternalStore$5(${1:subscribeFn}, ${2:getSnapshotFn}, ${3:getServerSnapshotFn});"
+    ],
+    "description": "useSyncExternalStore synchronizes a React state with an external store. It accepts a store object and returns a stateful value, and a function to update it. The returned state (state) is the same as the value passed as the first argument (initialState). The setState function is used to update the state. It accepts a new state value and enqueues a re-render of the component."
+  },
+
+  "useQuery Snippet": {
+    "prefix": ["useQuery", "uq"],
+    "body": "const { $4 } = useQuery$1({ queryKey: [${2:queryKey}], queryFn: ${3:queryFn} });",
     "description": "useQuery hook from react-query"
   },
-  "useQueries": {
-    "prefix": "useQueries",
+  "useMutation Snippet": {
+    "prefix": ["useMutation", "umut"],
+    "body": "const { ${3} } = useMutation$1({ mutationFn: ${2:mutationFn} });",
+    "description": "useMutation hook from react-query"
+  },
+  "useQueries Snippet": {
+    "prefix": ["useQueries", "uqs"],
     "body": [
-      "const results = useQueries([",
-      "\t{queryKey: ${1:queryKey}, queryFn: ${2:queryFn}}]",
+      "const results = useQueries$1(",
+      "\t${2:list}.map((${3:item}) => ({",
+      "\t\tqueryKey: [\"${4}\", ${3:item}$5],",
+      "\t\tqueryFn: ${6:queryFn},",
+      "\t}))",
       ");"
     ],
     "description": "useQueries hook from react-query, can be used to fetch a variable number of queries"
   },
-  "useMutation": {
-    "prefix": "useMutation",
-    "body": "const {${2}} = useMutation(${1:mutationFn});",
-    "description": "useMutation hook from react-query"
-  },
-  "useInfiniteQuery": {
-    "prefix": "useInfiniteQuery",
-    "body": "const {${3}} = useInfiniteQuery(${1:queryKey}, ({ pageParam = 1 }) => fetchPage(pageParam));",
+  "useInfiniteQuery Snippet": {
+    "prefix": ["useInfiniteQuery", "uiq"],
+    "body": [
+      "const { $5 } = useInfiniteQuery$1({",
+      "\tqueryKey: [${2:queryKey}],",
+      "\tqueryFn: ({ pageParam }) => ${3:queryFn},",
+      "\tgetNextPageParam: (lastPage) => ${4:getNextPageParam},",
+      "});"
+    ],
     "description": "useInfiniteQuery hook from react-query"
   },
-  "useIsFetching": {
-    "prefix": "useIsFetching",
-    "body": "const isFetching = useIsFetching();",
-    "description": "useIsFetching hook from react-query, returns whether there are queries that are fetching"
-  },
-  "useIsMutating": {
-    "prefix": "useIsMutating",
-    "body": "const isMutating = useIsMutating();",
-    "description": "useIsMutating hook from react-query, returns whether there are mutations that are fetching"
-  },
-  "useQueryClient": {
-    "prefix": "useQueryClient",
-    "body": "const queryClient = useQueryClient();",
+  "useQueryClient Snippet": {
+    "prefix": ["useQueryClient", "uqc"],
+    "body": "const queryClient = useQueryClient$1();",
     "description": "useQueryClient hook from react-query, The useQueryClient hook returns the current QueryClient instance."
+  },
+
+  "useNavigate Snippet": {
+    "prefix": ["useNavigate", "unav"],
+    "body": ["const navigate = useNavigate$1();"],
+    "description": "The useNavigate hook gives you access to the navigate function. You may use it to navigate to a new location."
+  },
+  "userHistory Snippet (react-router v5)": {
+    "prefix": ["useHistory", "uhist"],
+    "body": ["const history = useHistory$1();"],
+    "description": "The useHistory hook gives you access to the history instance that you may use to navigate. You may use it to navigate to a new location."
+  },
+  "useParams Snippet": {
+    "prefix": ["useParams", "up"],
+    "body": ["const { ${2:param} } = useParams$1();"],
+    "description": "useParams returns an object of key/value pairs of URL parameters. Use it to access match.params of the current <Route>."
+  },
+  "useLocation Snippet": {
+    "prefix": ["useLocation", "uloc"],
+    "body": ["const location = useLocation$1();"],
+    "description": "The useLocation hook returns the location object that represents the current URL. You can think about it like a useState that returns a new location whenever the URL changes."
+  },
+
+  "useSelector Snippet": {
+    "prefix": ["useSelector", "usel"],
+    "body": ["const ${1:state} = useSelector$2(state => state.${1:state});"],
+    "description": "Allows you to extract data from the Redux store state, using a selector function."
+  },
+  "useSelector shallow equal Snippet": {
+    "prefix": ["useSelectorShallowEqual", "uselshallow"],
+    "body": [
+      "const ${1:data} = useSelector$3((state) => ({${2:object}}), shallowEqual$4);"
+    ],
+    "description": "The default comparison is a strict === reference comparison, use the shallowEqual function from React-Redux as the equalityFn argument to useSelector() to perform shallow comparisons."
+  },
+  "useDispatch Snippet": {
+    "prefix": ["useDispatch", "ud"],
+    "body": ["const dispatch = useDispatch$1();"],
+    "description": "This hook returns a reference to the dispatch function from the Redux store. You may use it to dispatch actions as needed."
+  },
+  "useStore Snippet": {
+    "prefix": "useStore",
+    "body": ["const store = useStore$1();"],
+    "description": "This hook returns a reference to the same Redux store that was passed in to the <Provider> component. This hook should probably not be used frequently. Prefer useSelector() as your primary choice. However, this may be useful for less common scenarios that do require access to the store, such as replacing reducers."
   }
 }
