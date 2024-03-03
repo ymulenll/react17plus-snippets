@@ -1,8 +1,8 @@
 {
   "name": "react17plus-snippets",
-  "displayName": "React 17+/Redux/React-Query Snippets",
-  "description": "Snippets for React 17+",
-  "version": "1.0.0",
+  "displayName": "React 17+/JS/React-Query/React-Router/Redux Snippets",
+  "description": "Snippets for React, Redux and React-Query, supports both JavaScript and TypeScript",
+  "version": "2.0.0",
   "publisher": "yoelvismulen",
   "icon": "images/react-logo.png",
   "repository": {
@@ -11,7 +11,11 @@
   },
   "keywords": [
     "snippets",
-    "react"
+    "react",
+    "redux",
+    "react-query",
+    "javascript",
+    "typescript"
   ],
   "engines": {
     "vscode": "^1.54.0"
@@ -23,7 +27,7 @@
     "commands": [
       {
         "command": "extension.snippetSearch",
-        "title": "React 17 snippet search"
+        "title": "React snippet search"
       }
     ],
     "keybindings": [
@@ -41,6 +45,14 @@
       },
       {
         "language": "javascriptreact",
+        "path": "./snippets/snippets.code-snippets"
+      },
+      {
+        "language": "typescript",
+        "path": "./snippets/snippets.code-snippets"
+      },
+      {
+        "language": "typescriptreact",
         "path": "./snippets/snippets.code-snippets"
       }
     ]
